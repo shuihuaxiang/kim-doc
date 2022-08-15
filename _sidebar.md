@@ -1,6 +1,4 @@
 - [**主页**](/README.md)
-- **docs**
-  - [index](docs\index.md)
 - **java**
   - **其他**
     - [日常问题记录](java\其他\日常问题记录.md)
