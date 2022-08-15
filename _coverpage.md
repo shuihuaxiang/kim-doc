@@ -9,7 +9,7 @@
   
 - 记录问题解决  
 
-[GitHub](https://shuihuaxiang.github.io/kim-doc/)
+[GitHub](https://github.com/shuihuaxiang/kim-doc.git)
 [开始使用](/README.md)
 
-![color](#f0f0f0)
+![color](#F0F0F0)
