@@ -1,3 +1,16 @@
+# WIKI-docsify-git博客
+## 基本安装与搭建
+搭建方案博客推荐：[使用docsify+Git搭建自己的WiKi网站](https://mp.weixin.qq.com/s/CBsg8fcCawYq2LuJcwRH3Q)
+        
+       idea导入编辑docs文件
+       新增idea插件：
+            图片复制/粘贴：markdown-image-support 
+> 工程结构            
+ ![](images/a273cc70.png)                     
+***
+## docsify-index配置
+index.html里面的内容：  
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +35,7 @@
       //   '/.*/_sidebar.md': '/_sidebar.md'
       // },
       subMaxLevel:1,//增加生成目录的层级
-      sidebarDisplayLevel: 0,
+      sidebarDisplayLevel: 1,
       loadNavbar:true,//开启导航栏
       mergeNavbar: true, // 小屏设备下合并导航栏到侧边栏
       subMaxLevel: 4,// 自定义侧边栏后默认不会再生成目录，设置生成目录的最大层级（建议配置为2-4）
@@ -63,3 +76,87 @@
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 </body>
 </html>
+```
+***
+## 发布到GitHub-生成pages
+1. 使用idea，push到GitHub
+2. 生成可访问的页面  
+   选择Settings -> 选择左侧Pages -> 配置然后save得到网址
+   ![](images/f35ea797.png)
+   ![](images/48096b68.png)
+   ![](images/3e12e4dc.png)
+   
+   
+***
+## markdown常用语法
+### 一、标题   
+  
+    语法说明：#+空格+标题
+            （写几个#，代表几级标题，最多支持到六级标题）
+![](images/cf0c71f2.png)  
+
+### 二、字体
+    
+     语法说明：
+            *+内容+*  -->  斜体
+            **+内容+**  --> 加粗
+            ***+内容+***  --> 斜体加粗
+            ~~+内容+~~  --> 删除线  （“~”在“Tab”键上面）
+![](images/d4410052.png)
+### 三、引用
+
+    语法说明：>+空格  （双击回车退出引用）
+![](images/7b5be98a.png)
+
+### 四、分割线
+
+    语法说明：---（减号键）或者 ***
+![](images/fd2bc2e4.png)
+### 五、图片
+
+    语法说明：![自定义图片名称]()
+    （“[]”内的图片名称可有可无。在输入左括号的时候会自动跳转到插入图片的格式）
+![](images/e7597836.png)
+### 六、超链接 
+    
+     语法说明：[超链接说明]()
+![](images/c34b72a8.png)
+### 七、列表
+
+     语法说明：
+    
+            有序列表：数字+.+空格+内容
+            无序列表：-（减号/短横线）+空格+内容
+           （回车会自动添加一行，双击回车退出列表）
+![](images/0275e2e4.png)
+### 八、表格
+    
+     语法说明：
+    
+            原生操作：列名1 | 列名2 | 列名3         （第一行为表头）
+    
+                              --- | --- | ---        （第二行作用为分割表头和主体）
+    
+                              内容1 | 内容2 | 内容3         （第三行及以后都是表的主体）
+    
+            （文字或者减号和管道号“|”之间有没有空格都可以）
+ 
+  例如：  
+   学号|姓名|
+   ---|----|
+   1|张三|
+   2|李四|
+   3|王五|   
+### 九、代码块
+ 语法说明：```+编程语言  （ ` 为英文输入格式下的波浪号键，在Tab键上面）   
+ 例如：  
+```java
+    public class Test{
+    public static void main(String[] args){
+        System.out.println("hello world");
+       }
+    }
+ ```
+### 更多内容
+推荐参考博客：
+[markdown使用与语法](https://book.itxueyuan.com/BA9P/nrne)

@@ -6,6 +6,6 @@
   * [GitHub](https://github.com/shuihuaxiang/kim-doc)
 
 * 联系我们
-  * [邮箱]()
+  * [邮箱](base/email.md)
   * [电话]()
   

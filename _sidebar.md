@@ -1,40 +1,45 @@
 - [**主页**](/README.md)
-- **java**
-  - **其他**
-    - [日常问题记录](java/其他/日常问题记录.md)
-  - **分布式**
-    - [分布式常用算法](java/分布式/分布式常用算法.md)
-  - **基础**
-    - [IO](java/基础/IO.md)
-    - [JUC并发编程](java/基础/JUC并发编程.md)
-    - [JVM](java/基础/JVM.md)
-    - [常见使用](java/基础/常见使用.md)
-    - [集合](java/基础/集合.md)
-  - **常用框架**
-    - [canal](java/常用框架/canal.md)
-    - **MQ**
-      - [ActiveMq](java/常用框架/MQ/ActiveMq.md)
-      - [RabbitMq](java/常用框架/MQ/RabbitMq.md)
-      - [RocketMQ](java/常用框架/MQ/RocketMQ.md)
-    - [sharding-jdbc](java/常用框架/sharding-jdbc.md)
-    - [spring](java/常用框架/spring.md)
-    - [springboot](java/常用框架/springboot.md)
-  - **开发工具**
-    - [docker](java/开发工具/docker.md)
-    - [git](java/开发工具/git.md)
-    - [idea](java/开发工具/idea.md)
-  - **操作系统**
-    - [Linux](java/操作系统/Linux.md)
-    - [虚拟机](java/操作系统/虚拟机.md)
-  - **构架**
-    - [分布式系统构架](java/构架/分布式系统构架.md)
-    - [常规系统构架](java/构架/常规系统构架.md)
-  - **运维**
-    - [运维记录](java/运维/运维记录.md)
+- **base**
+  - [email](base/email.md)
+- **java基础**
+  - [IO](java基础/IO.md)
+  - [JUC并发编程](java基础/JUC并发编程.md)
+  - [JVM](java基础/JVM.md)
+  - [常见使用](java基础/常见使用.md)
+  - [源码解析模板](java基础/源码解析模板.md)
+  - **集合**
+    - [ArrayList源码(jdk1.8)](java基础/集合/ArrayList源码(jdk1.8).md)
+    - [ConcurrentHashMap源码(jdk1.8)](java基础/集合/ConcurrentHashMap源码(jdk1.8).md)
+    - [HashMap源码(jdk1.8)](java基础/集合/HashMap源码(jdk1.8).md)
+    - [常见问题](java基础/集合/常见问题.md)
+    - [集合概述](java基础/集合/集合概述.md)
+- **分布式**
+  - [分布式常用算法](分布式/分布式常用算法.md)
 - **前端**
   - [jQuery](前端/jQuery.md)
-  - [js](前端/js.md)
+  - [JS](前端/JS.md)
   - [node-js](前端/node-js.md)
+- **常用框架**
+  - [canal](常用框架/canal.md)
+  - **MQ**
+    - [ActiveMq](常用框架/MQ/ActiveMq.md)
+    - [RabbitMq](常用框架/MQ/RabbitMq.md)
+    - [RocketMQ](常用框架/MQ/RocketMQ.md)
+  - [sharding-jdbc](常用框架/sharding-jdbc.md)
+  - [spring](常用框架/spring.md)
+  - [springboot](常用框架/springboot.md)
+- **开发工具**
+  - [docker](开发工具/docker.md)
+  - [git](开发工具/git.md)
+  - [idea](开发工具/idea.md)
+- **操作系统**
+  - [Linux](操作系统/Linux.md)
+  - [虚拟机](操作系统/虚拟机.md)
+- **日常bug记录**
+  - [日常问题记录](日常bug记录/日常问题记录.md)
+- **构架**
+  - [分布式系统构架](构架/分布式系统构架.md)
+  - [常规系统构架](构架/常规系统构架.md)
 - **计算机基础**
   - [操作系统](计算机基础/操作系统.md)
   - [数据结构](计算机基础/数据结构.md)
@@ -45,3 +50,8 @@
   - [基本介绍](设计模式/基本介绍.md)
   - [结构型模式](设计模式/结构型模式.md)
   - [行为型模式](设计模式/行为型模式.md)
+- **运维**
+  - [Apache](运维/Apache.md)
+  - [springboot项目生成服务自动运行](运维/springboot项目生成服务自动运行.md)
+  - [WIKI-docsify-git博客](运维/WIKI-docsify-git博客.md)
+  - [运维记录](运维/运维记录.md)
