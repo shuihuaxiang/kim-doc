@@ -3,10 +3,11 @@
   - [email](base/email.md)
 - **java基础**
   - [IO](java基础/IO.md)
+  - **Java8新特性**
+    - [lambda的使用](java基础/Java8新特性/lambda的使用.md)
   - [JVM](java基础/JVM.md)
   - **多线程与并发**
     - **java并发**
-      - [ThreadLocal](java基础/多线程与并发/java并发/ThreadLocal.md)
       - [所有的锁](java基础/多线程与并发/java并发/所有的锁.md)
       - [理论基础](java基础/多线程与并发/java并发/理论基础.md)
       - [线程基础](java基础/多线程与并发/java并发/线程基础.md)
@@ -19,6 +20,7 @@
         - [Exchanger](java基础/多线程与并发/JUC/JUC工具类/Exchanger.md)
         - [Phaser](java基础/多线程与并发/JUC/JUC工具类/Phaser.md)
         - [Semaphore](java基础/多线程与并发/JUC/JUC工具类/Semaphore.md)
+        - [ThreadLocal](java基础/多线程与并发/JUC/JUC工具类/ThreadLocal.md)
       - **JUC线程池**
         - [Fork、Join](java基础/多线程与并发/JUC/JUC线程池/Fork、Join.md)
         - [FutureTask](java基础/多线程与并发/JUC/JUC线程池/FutureTask.md)
@@ -71,6 +73,10 @@
 - **操作系统**
   - [Linux](操作系统/Linux.md)
   - [虚拟机](操作系统/虚拟机.md)
+- **数据库**
+  - **mysql**
+    - [mysql安装与使用](数据库/mysql/mysql安装与使用.md)
+    - [mysql理论及原理](数据库/mysql/mysql理论及原理.md)
 - **日常bug记录**
   - [日常问题记录](日常bug记录/日常问题记录.md)
 - **构架**
