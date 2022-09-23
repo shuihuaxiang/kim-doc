@@ -61,6 +61,8 @@
   - [git](常用工具/git.md)
   - [idea](常用工具/idea.md)
   - [JVM调优工具](常用工具/JVM调优工具.md)
+  - [postman](常用工具/postman.md)
+  - [jmeter](常用工具/jmeter.md)
 - **常用框架**
   - [canal](常用框架/canal.md)
   - **MQ**
@@ -69,14 +71,29 @@
     - [RocketMQ](常用框架/MQ/RocketMQ.md)
   - [sharding-jdbc](常用框架/sharding-jdbc.md)
   - [spring](常用框架/spring.md)
-  - [springboot](常用框架/springboot.md)
+  - **springboot**
+    - [springboot](常用框架/springboot/springboot.md)
+    - [springboot与redis](常用框架/springboot/springboot与redis.md)
 - **操作系统**
   - [Linux](操作系统/Linux.md)
   - [虚拟机](操作系统/虚拟机.md)
 - **数据库**
+  - **ES**
+    - [ES安装与使用](数据库/ES/ES安装与使用.md)
+    - [ES理论与原理](数据库/ES/ES理论与原理.md)
+    - [RestClient与ES](数据库/ES/RestClient与ES.md)
+  - **influxdb**
+    - [influxdb安装与使用](数据库/influxdb/influxdb安装与使用.md)
+    - [influxdb理论与原理](数据库/influxdb/influxdb理论与原理.md)
   - **mysql**
     - [mysql安装与使用](数据库/mysql/mysql安装与使用.md)
     - [mysql理论及原理](数据库/mysql/mysql理论及原理.md)
+  - **redis**
+    - [redis安装与使用](数据库/redis/redis安装与使用.md)
+    - [redis理论与原理](数据库/redis/redis理论与原理.md)
+    - [redis客户端](数据库/redis/redis客户端.md)
+    - [redis实战](数据库/redis/redis实战.md)
+    - [redis运维](数据库/redis/redis运维.md)
 - **日常bug记录**
   - [日常问题记录](日常bug记录/日常问题记录.md)
 - **构架**

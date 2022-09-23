@@ -941,6 +941,6 @@ set global long_query_time=3;|设定慢查询阈值|单位秒，大于3秒，而
 
 ### 使用
 
-主从复制和分库分表，另开一篇文章[mysql安装与使用](mysql安装与使用.md)。
+主从复制和分库分表，另开一篇文章[mysql安装与使用](/数据库/mysql/mysql安装与使用.md)。
 
 

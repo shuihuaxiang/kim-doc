@@ -6,7 +6,8 @@
     
      1.git init 
      2.git remote add origin https://github.com/shuihuaxiang/kim-doc.git
-     3.git pull origin master![](images/git/8bf83846.png)
+     3.git pull origin master
+
      
 
 ***
