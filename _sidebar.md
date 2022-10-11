@@ -63,17 +63,23 @@
   - [JVM调优工具](常用工具/JVM调优工具.md)
   - [postman](常用工具/postman.md)
   - [jmeter](常用工具/jmeter.md)
+  - [Nginx](常用工具/Nginx.md)
 - **常用框架**
   - [canal](常用框架/canal.md)
-  - **MQ**
-    - [ActiveMq](常用框架/MQ/ActiveMq.md)
-    - [RabbitMq](常用框架/MQ/RabbitMq.md)
-    - [RocketMQ](常用框架/MQ/RocketMQ.md)
+  - **消息中间件**
+    - **RabbitMQ**
+        - [RabbitMQ安装与使用](常用框架/消息中间件/RabbitMQ/RabbitMQ安装与使用.md)
+        - [RabbitMQ理论与原理](常用框架/消息中间件/RabbitMQ/RabbitMQ理论与原理.md)
+        - [RabbitMQ运维](常用框架/消息中间件/RabbitMQ/RabbitMQ运维.md)
   - [sharding-jdbc](常用框架/sharding-jdbc.md)
   - [spring](常用框架/spring.md)
   - **springboot**
     - [springboot](常用框架/springboot/springboot.md)
     - [springboot与redis](常用框架/springboot/springboot与redis.md)
+  - **springcloud**
+    - **Alibaba**
+        - **Nacos**
+            - [Nacos安装与使用](常用框架/springcloud/Alibaba/Nacos/Nacos安装与使用.md)  
 - **操作系统**
   - [Linux](操作系统/Linux.md)
   - [虚拟机](操作系统/虚拟机.md)
@@ -81,6 +87,9 @@
   - **ES**
     - [ES安装与使用](数据库/ES/ES安装与使用.md)
     - [ES理论与原理](数据库/ES/ES理论与原理.md)
+    - [ES自动补全](数据库/ES/ES自动补全.md)
+    - [ES聚合查询](数据库/ES/ES聚合查询.md)
+    - [ES运维](数据库/ES/ES运维.md)
     - [RestClient与ES](数据库/ES/RestClient与ES.md)
   - **influxdb**
     - [influxdb安装与使用](数据库/influxdb/influxdb安装与使用.md)
@@ -94,6 +103,8 @@
     - [redis客户端](数据库/redis/redis客户端.md)
     - [redis实战](数据库/redis/redis实战.md)
     - [redis运维](数据库/redis/redis运维.md)
+    - [redis数据结构与类型](数据库/redis/redis数据结构与类型.md)
+    - [redis网络模型](数据库/redis/redis网络模型.md)
 - **日常bug记录**
   - [日常问题记录](日常bug记录/日常问题记录.md)
 - **构架**

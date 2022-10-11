@@ -15,6 +15,26 @@
     
 ![](images/86330768.png)
 
+## yml配置
+
+    
+    spring:
+      elasticsearch:
+        rest:
+          uris: http://192.168.171.132:9200
+              
+
+## config
+    
+    @Configuration
+    public class ElasticSearchConfig {
+    
+        @Bean
+        public RestHighLevelClient restHighLevelClient(){
+            return new RestHighLevelClient(RestClient.builder(HttpHost.create("http://192.168.171.132:9200")));
+        }
+    }
+**yml和config选一个就行**
 ## 快速入门match_all
     
 > 我们以match_all查询为例
@@ -68,9 +88,25 @@
         @Autowired
         private IHotelService hotelService;
     
+       
         /**
-         * 批量添加数据
-         */
+              * 批量添加数据
+              */
+             @Test
+             void testBulkRequest() throws IOException {
+                 List<Hotel> hotels = hotelService.list();
+         
+                 BulkRequest bulkRequest = new BulkRequest();
+         
+                 for (Hotel hotel : hotels) {
+                     HotelDoc hotelDoc = new HotelDoc(hotel);
+         
+                     bulkRequest.add(new IndexRequest("hotel")
+                             .source(JSONUtil.toJsonStr(hotelDoc),XContentType.JSON));
+                 }
+         
+                 client.bulk(bulkRequest,RequestOptions.DEFAULT);
+             }         
         @Test
         void matchAllTest() throws IOException {
             // 1.准备Request
@@ -234,7 +270,7 @@
             MatchAllQueryBuilder builder = QueryBuilders.matchAllQuery();
     
             request.source().query(builder);
-            request.source().from(page - 1);
+            request.source().from((page - 1) * size);
             request.source().size(size);
             // 3.发送请求
             SearchResponse response = client.search(request, RequestOptions.DEFAULT);
@@ -265,7 +301,7 @@
             }
   
             
-### 返回结构
+### 结果解析
 
     private void handleResponse(SearchResponse response) {
             SearchHits searchHits = response.getHits();
@@ -291,4 +327,346 @@
             }
         }  
 
+
+## 示例代码
+    
+> yml配置：
+    
+    spring:
+      elasticsearch:
+        rest:
+          uris: http://192.168.171.132:9200
+
+
+> vo：
+
+    @Data
+    @AllArgsConstructor
+    public class RequestParams {
+        /**
+         * 关键字
+         */
+        private String key;
+        private Integer page;
+        private Integer size;
+        /**
+         * 排名条件
+         */
+        private String sortBy;
+        /**
+         * 城市
+         */
+        private String city;
+        /**
+         * 品牌
+         */
+        private String brand;
+        /**
+         * 星级
+         */
+        private String starName;
+        /**
+         * 最小价格
+         */
+        private Integer minPrice;
+        /**
+         * 最大价格
+         */
+        private Integer maxPrice;
+        /**
+         * 我当前的地理坐标
+         */
+        private String location;
+    }  
+
+> dto：
+    
+    @Data
+    @NoArgsConstructor
+    public class HotelDoc {
+        private Long id;
+        private String name;
+        private String address;
+        private Integer price;
+        private Integer score;
+        private String brand;
+        private String city;
+        private String starName;
+        private String business;
+        private String location;
+        private String pic;
+    
+        // 排序时的 距离值
+        private Object distance;
+        //权重打分，广告
+        private Boolean isAD;
+    
+        /**
+         * 新增自动补全字段
+         *
+         * @param hotel
+         */
+        private List<String> suggestion;
+    
+    
+        public HotelDoc(Hotel hotel) {
+            this.id = hotel.getId();
+            this.name = hotel.getName();
+            this.address = hotel.getAddress();
+            this.price = hotel.getPrice();
+            this.score = hotel.getScore();
+            this.brand = hotel.getBrand();
+            this.city = hotel.getCity();
+            this.starName = hotel.getStarName();
+            this.business = hotel.getBusiness();
+            this.location = hotel.getLatitude() + ", " + hotel.getLongitude();
+            this.pic = hotel.getPic();
+            if (this.business.contains("/")) {
+                String[] arr = this.business.split("/");
+                this.suggestion = new ArrayList<>();
+                this.suggestion.add(this.brand);
+                Collections.addAll(this.suggestion, arr);
+            } else {
+                this.suggestion = Arrays.asList(this.brand, this.business);
+    
+            }
+    
+        }
+    }
+
+> HotelServiceImpl：
+
+       @Slf4j
+       @Service
+       public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements IHotelService {
+           @Autowired
+           private RestHighLevelClient client;
+       
+           /**
+            * 查询全部
+            * @param params
+            * @return
+            * @throws IOException
+            */
+           @Override
+           public PageResult listAll(RequestParams params) throws IOException {
+       
+               SearchRequest request = new SearchRequest("hotel");
+       
+               if (StrUtil.isBlank(params.getKey())) {
+                   MatchAllQueryBuilder matchQuery = QueryBuilders.matchAllQuery();
+                   request.source().query(matchQuery);
+               } else {
+                   MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("all", params.getKey());
+                   request.source().query(matchQuery);
+               }
+               // 2.2.分页
+               int page = params.getPage();
+               int size = params.getSize();
+               request.source().from((page - 1) * size).size(size);
+       
+               SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+       
+               return basicResponseHandler(response);
+           }
+       
+           /**
+            * 带查询条件查询
+            * @param params
+            * @return
+            */
+           @Override
+           public PageResult search(RequestParams params) {
+               try {
+                   SearchRequest request = new SearchRequest("hotel");
+                   buildBasicQuery(params, request);
+                   // 2.2.分页
+                   int page = params.getPage();
+                   int size = params.getSize();
+                   request.source().from((page - 1) * size).size(size);
+       
+                   if (StrUtil.isNotBlank(params.getSortBy()) && !("default").equals(params.getSortBy())) {
+                       request.source().sort(params.getSortBy(), SortOrder.ASC);
+                   }
+                   //地理位置
+                   if (StrUtil.isNotBlank(params.getLocation())) {
+                       request.source().sort(SortBuilders.geoDistanceSort("location", new GeoPoint(params.getLocation())).order(SortOrder.ASC).unit(DistanceUnit.KILOMETERS));
+                   }
+                   //高亮
+                   request.source().highlighter(
+                           new HighlightBuilder().field("name").requireFieldMatch(false)
+                   );
+       
+                   SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+                   return basicResponseHandler(response);
+       
+               } catch (IOException e) {
+                   throw new RuntimeException(e);
+               }
+       
+           }
+       
+           /**
+            * 自动补全查询
+            * @param key
+            * @return
+            * @throws IOException
+            */
+           @Override
+           public List<String> getSuggestion(String key) throws IOException {
+               SearchRequest request = new SearchRequest("hotel");
+       
+               request.source().suggest(new SuggestBuilder().addSuggestion("suggestions",
+                       SuggestBuilders.completionSuggestion("suggestion")
+                               .prefix(key)
+                               .skipDuplicates(true)
+                               .size(10)
+               ));
+       
+               SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+       
+               Suggest suggest = response.getSuggest();
+               CompletionSuggestion suggestions = suggest.getSuggestion("suggestions");
+               List<CompletionSuggestion.Entry.Option> options = suggestions.getOptions();
+               List<String> list = new ArrayList<>(options.size());
+               for (CompletionSuggestion.Entry.Option option : options) {
+                   String text = option.getText().toString();
+                   list.add(text);
+               }
+       
+               return list;
+           }
+       
+           /**
+            * 聚合查询
+            * @param params
+            * @return
+            */
+           @Override
+           public Map<String, List<String>> filters(RequestParams params) {
+       
+               try {
+                   Map<String, List<String>> resultMap = new HashMap<>();
+       
+                   SearchRequest request = new SearchRequest("hotel");
+                   buildBasicQuery(params, request);
+       
+                   request.source().size(0);
+                   request.source().aggregation(AggregationBuilders.terms("brandAgg").field("brand")).size(100);
+                   request.source().aggregation(AggregationBuilders.terms("starNameAgg").field("starName")).size(100);
+                   request.source().aggregation(AggregationBuilders.terms("cityAgg").field("city")).size(100);
+                   SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+       
+                   Aggregations aggregations = response.getAggregations();
+                   List<String> brandList = getAggByName(aggregations, "brandAgg");
+                   resultMap.put("品牌", brandList);
+                   List<String> cityList = getAggByName(aggregations, "cityAgg");
+                   resultMap.put("城市",cityList);
+                   List<String> starNameList = getAggByName(aggregations, "starNameAgg");
+                   resultMap.put("星级", starNameList);
+       
+       
+                   return resultMap;
+       
+               } catch (IOException e) {
+                   throw new RuntimeException(e);
+               }
+           }
+       
+           /**
+            * 聚合查询解析 封装
+            * @param aggregations
+            * @param name
+            * @return
+            */
+           private List<String> getAggByName(Aggregations aggregations, String name) {
+               List<String> list = new ArrayList<>();
+               Terms terms = aggregations.get(name);
+               List<? extends Terms.Bucket> buckets = terms.getBuckets();
+       
+               buckets.stream().forEach(bucket -> list.add((bucket.getKeyAsString())));
+               return list;
+           }
+       
+           /**
+            * query查询request 封装
+            * @param params
+            * @param request
+            */
+           private void buildBasicQuery(RequestParams params, SearchRequest request) {
+               BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+       
+               if (StrUtil.isNotBlank(params.getKey())) {
+                   boolQuery.must(QueryBuilders.matchQuery("all", params.getKey()));
+               } else {
+                   boolQuery.must(QueryBuilders.matchAllQuery());
+               }
+               // 3.城市条件
+               if (StrUtil.isNotBlank(params.getCity())) {
+                   boolQuery.must(QueryBuilders.termQuery("city", params.getCity()));
+               }
+               // 4.品牌条件
+               if (StrUtil.isNotBlank(params.getBrand())) {
+                   boolQuery.must(QueryBuilders.termQuery("brand", params.getBrand()));
+               }
+               // 5.星级条件
+               if (StrUtil.isNotBlank(params.getStarName())) {
+                   boolQuery.must(QueryBuilders.termQuery("starName", params.getStarName()));
+               }
+               if (params.getMaxPrice() != null && params.getMinPrice() != null) {
+                   boolQuery.must(QueryBuilders.rangeQuery("price")
+                           .gte(params.getMinPrice())
+                           .lte(params.getMaxPrice()));
+               }
+               //复合查询，权重加分
+               FunctionScoreQueryBuilder.FilterFunctionBuilder[] filterFunctionBuilders =
+                       new FunctionScoreQueryBuilder.FilterFunctionBuilder[]{
+                               new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+                                       QueryBuilders.termQuery("isAD", true),
+                                       ScoreFunctionBuilders.weightFactorFunction(1000))
+                       };
+       
+       
+               //打分
+               FunctionScoreQueryBuilder builder = QueryBuilders.functionScoreQuery(boolQuery, filterFunctionBuilders)
+                       .boostMode(CombineFunction.SUM);
+       //                .maxBoost(10);
+               request.source().query(builder);
+           }
+       
+           /**
+            * query查询处理response结果 封装
+            * @param response
+            * @return
+            */
+           private PageResult basicResponseHandler(SearchResponse response) {
+               SearchHits searchHits = response.getHits();
+               long total = searchHits.getTotalHits().value;
+       
+               List<Object> list = new ArrayList<>();
+               SearchHit[] hits = searchHits.getHits();
+               for (SearchHit hit : hits) {
+                   String source = hit.getSourceAsString();
+                   HotelDoc hotelDoc = JSONUtil.toBean(source, HotelDoc.class);
+                   //从地理排序中获得距离
+                   Object[] sortValues = hit.getSortValues();
+                   if (sortValues.length > 0) {
+                       hotelDoc.setDistance(sortValues[0]);
+                   }
+                   //高亮结果分析
+                   Map<String, HighlightField> fields = hit.getHighlightFields();
+                   if (!fields.isEmpty()) {
+                       HighlightField highlightField = fields.get("name");
+                       if (highlightField != null) {
+                           String name = highlightField.getFragments()[0].toString();
+                           hotelDoc.setName(name);
+                       }
+                   }
+                   list.add(hotelDoc);
+               }
+               list.forEach(h -> System.out.println(h.toString()));
+       
+               return new PageResult(total, list);
+           }
+       }
 

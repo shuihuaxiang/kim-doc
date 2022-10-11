@@ -161,3 +161,43 @@
 ![](images/7e324e88.png)
 
 **其他字典配置类似**
+
+## 拼音分词器
+### 在线安装
+
+    cd 到挂载数据卷
+    cd /usr/local/es/es-plugins
+     
+    mkdir py
+     
+    chmod 777 py
+     
+    cd py
+     
+    wget https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v7.12.1/elasticsearch-analysis-pinyin-7.12.1.zip
+
+    unzip elasticsearch-analysis-pinyin-7.12.1.zip
+    
+    #解压之后一定要删除 zip，不然启动不了
+    rm -rf  elasticsearch-analysis-pinyin-7.12.1.zip
+    
+    
+    docker restart es
+    
+    docker logs -f es
+    
+    # 进入docker 查看
+    docker exec -it es /bin/bash
+    
+### 测试
+    
+     POST /_analyze
+     {
+       "text": "哈喽，世界",
+       "analyzer": "pinyin"
+     }
+     
+![](images/3dc76fac.png)
+
+
+   

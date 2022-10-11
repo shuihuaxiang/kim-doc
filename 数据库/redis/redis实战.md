@@ -618,45 +618,46 @@
  - 如果没有传值，就默认30秒，然后watchdog自动续约，续约时间为30/3。也就是10秒之后
  - 当系统宕机了，就不会自动续约了，就会释放锁，不会造成死锁。  
  
-源码：
+源码：  
+
     
-    //未设置过期时间
-    while (true) {
-        ttl = tryAcquire(leaseTime, unit, threadId);
-        if (ttl == null) {//过期时间并未空while循环执行
-            break;
+        //未设置过期时间
+        while (true) {
+            ttl = tryAcquire(leaseTime, unit, threadId);
+            if (ttl == null) {//过期时间并未空while循环执行
+                break;
+            }
         }
-    }
-    private long lockWatchdogTimeout = 30 * 1000;//看门狗时间30s
-    
-    private void renewExpiration(){
-        if (res) {
-            // 重复调用
-            renewExpiration();
+        private long lockWatchdogTimeout = 30 * 1000;//看门狗时间30s
+        
+        private void renewExpiration(){
+            if (res) {
+                // 重复调用
+                renewExpiration();
+            }
+            internalLockLeaseTime / 3, TimeUnit.MILLISECONDS//10s调用一次
         }
-        internalLockLeaseTime / 3, TimeUnit.MILLISECONDS//10s调用一次
-    }
-    
-    //设置过期时间
-    if (leaseTime != -1) {
-        return tryLockInnerAsync(leaseTime, unit, threadId, RedisCommands.EVAL_LONG);
-    }
-    
-    internalLockLeaseTime = unit.toMillis(leaseTime);//设置锁时间
-    
-    return evalWriteAsync(getName(), LongCodec.INSTANCE, command,
-                    "if (redis.call('exists', KEYS[1]) == 0) then " +
-                            "redis.call('hincrby', KEYS[1], ARGV[2], 1); " +
-                            "redis.call('pexpire', KEYS[1], ARGV[1]); " +
-                            "return nil; " +
-                            "end; " +
-                            "if (redis.call('hexists', KEYS[1], ARGV[2]) == 1) then " +
-                            "redis.call('hincrby', KEYS[1], ARGV[2], 1); " +
-                            "redis.call('pexpire', KEYS[1], ARGV[1]); " +
-                            "return nil; " +
-                            "end; " +
-                            "return redis.call('pttl', KEYS[1]);",
-                    Collections.singletonList(getName()), internalLockLeaseTime, getLockName(threadId));//执行lua脚本   
+        
+        //设置过期时间
+        if (leaseTime != -1) {
+            return tryLockInnerAsync(leaseTime, unit, threadId, RedisCommands.EVAL_LONG);
+        }
+        
+        internalLockLeaseTime = unit.toMillis(leaseTime);//设置锁时间
+        
+        return evalWriteAsync(getName(), LongCodec.INSTANCE, command,
+                        "if (redis.call('exists', KEYS[1]) == 0) then " +
+                                "redis.call('hincrby', KEYS[1], ARGV[2], 1); " +
+                                "redis.call('pexpire', KEYS[1], ARGV[1]); " +
+                                "return nil; " +
+                                "end; " +
+                                "if (redis.call('hexists', KEYS[1], ARGV[2]) == 1) then " +
+                                "redis.call('hincrby', KEYS[1], ARGV[2], 1); " +
+                                "redis.call('pexpire', KEYS[1], ARGV[1]); " +
+                                "return nil; " +
+                                "end; " +
+                                "return redis.call('pttl', KEYS[1]);",
+                        Collections.singletonList(getName()), internalLockLeaseTime, getLockName(threadId));//执行lua脚本   
 
 #### redission锁的 mutiLock 原理
 
@@ -1261,7 +1262,7 @@ Redis 中的 HLL 是基于 **string 结构实现**的，单个 HLL 的内存永�
 ![](images/c58896c0.png)
  
  
- ### redis分布式id
+ ## redis分布式id
  > 随着我们系统规模越来越大，mysql 的单表的容量不宜超过 500W，数据量过大之后，我们要进行**拆库拆表**，但*拆分表了之后，他们从逻辑上讲他们是同一张表，所以他们的 id 是不能一样的， 于是乎我们需要保证 id 的唯一性*。
    
 
@@ -1275,7 +1276,7 @@ Redis 中的 HLL 是基于 **string 结构实现**的，单个 HLL 的内存永�
  - 序列号：32bit，秒内的计数器，支持每秒产生 2^32 个不同 ID
  
  
-#### 封装
+### 封装
 
     @Component
     public class RedisIdWorker {
@@ -1312,7 +1313,7 @@ Redis 中的 HLL 是基于 **string 结构实现**的，单个 HLL 的内存永�
     }
     
     
-#### 测试
+### 测试
     
     @Test
     void testIdWorker() throws InterruptedException {

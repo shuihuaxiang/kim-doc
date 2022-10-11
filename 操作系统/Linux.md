@@ -136,6 +136,38 @@
     
 
 ## 日常使用
+### 更改镜像源ubuntu 18.04(bionic)
+
+    1、进入目录
+    cd /etc/apt
+    2、拷贝文件
+    cp sources.list source.list.bak
+    
+    更改镜像源
+    vi sources.list
+    :%d 快速清空内容
+    添加
+    
+    deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+    deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+    
+    deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+    
+    deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+    
+    # deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+    # deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+    
+    deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+    
+    更新镜像源
+    
+    apt-get update    
+    
+
 ### 更改时区Ubuntu 18.04.5
     //查看时区
      timedatectl
@@ -188,4 +220,26 @@
 
 
 
+### xshell不能连接虚拟机
+> 由于xshell远程连接ubuntu是通过ssh协议的，所以，需要给ubuntu安装ssh服务器。
+
+1.查看是有有shh
+
+    ps -e | grep ssh   
+
+没有看到sshd就说明未启动，选择下面的一种方式手动启动就好了
+![](images/7ebe1388.png)
+
+2.重启ssh
     
+    service sshd start
+    
+如果Failed to start sshd.service: Unit sshd.service not found，就安装openssh-server  
+
+3.按照openssh-server
+
+    apt-get install openssh-server
+    
+4.重启ssh
+    
+    service ssh restart

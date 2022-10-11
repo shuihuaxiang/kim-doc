@@ -295,6 +295,9 @@ docker镜像中有分层的概念，就是一个镜像可能基于好几个镜�
         docker logs -f  -t  --tail 500 iot_demo
     
     
+### 15.查看数据卷
+    
+    docker inspect es | grep Mounts -A 20
 
 ## Docker Compose 安装与使用
 ### 简介

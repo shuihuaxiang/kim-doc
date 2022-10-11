@@ -102,3 +102,30 @@
 
 3.**多线程用${变量名}使用就行**
 
+
+### 批量导出参数
+
+> 线程组-添加-取样器-BeanShell取样器
+
+    
+    FileWriter file = new FileWriter("D:/work/soft/apache-jmeter-5.5/workplace/token_nums.txt",true);
+    //创建一个字符缓存输出流
+    
+    BufferedWriter out = new BufferedWriter(file);
+    
+    //写文件内容
+    
+    //vars.get:获取 jmeter 中的变量值
+    if(!vars.get("token").equals("error")){
+    	
+    out.write(vars.get("token")+"\n");
+    }
+    
+    //关闭写数据流
+    out.close();
+    //关闭文件
+    
+    file.close();
+    
+    
+![](images/821445f9.png)  
