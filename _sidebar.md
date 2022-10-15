@@ -94,6 +94,7 @@
   - **influxdb**
     - [influxdb安装与使用](数据库/influxdb/influxdb安装与使用.md)
     - [influxdb理论与原理](数据库/influxdb/influxdb理论与原理.md)
+    - [Springboot与InfluxDB](数据库/influxdb/Springboot与InfluxDB.md)
   - **mysql**
     - [mysql安装与使用](数据库/mysql/mysql安装与使用.md)
     - [mysql理论及原理](数据库/mysql/mysql理论及原理.md)
