@@ -8,7 +8,18 @@
      2.git remote add origin https://github.com/shuihuaxiang/kim-doc.git
      3.git pull origin master
 
-     
+## 设置网络
+1.打开DNS查询工具：http://tool.chinaz.com/dns  
+
+2.选择TTL值最低的那个，如果当前列表没有符合要求的IP，重新检测。
+
+![](images/c4299392.png)   
+3.使用Win + R 组合键，在运行对话框里，复制并粘贴：C:\WINDOWS\system32\drivers\etc
+
+4.打开以后，选择HOSTS文件。把刚才复制的IP地址，复制到这个文件里，格式如下：
+
+![](images/6e201f1b.png)
+  
 ***
 ## 异常记录
 >  1. idea  push的时候遇到问题：unable to access 'https://github.com/shuihuaxiang/kim-doc.git/':
