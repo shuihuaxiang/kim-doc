@@ -39,5 +39,8 @@ OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054
        因为服务器的SSL证书没有经过第三方机构的签署
         git config --global http.sslVerify "false"
        解除ssl验证后，再次git即可
-     
+     方案3：
+     取消代理
+      git config --global --unset http.proxy 
       
+      git config --global --unset https.proxy
