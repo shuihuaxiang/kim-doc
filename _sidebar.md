@@ -57,6 +57,7 @@
   - [JS](前端/JS.md)
   - [node-js](前端/node-js.md)
 - **常用工具**
+  - [maven](常用工具/maven.md)
   - [docker](常用工具/docker.md)
   - [git](常用工具/git.md)
   - [idea](常用工具/idea.md)
