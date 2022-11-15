@@ -1,0 +1,55 @@
+version: "3.2"
+services:
+ filebeat:
+  image: elastic/filebeat:7.12.1
+  volumes:
+   - /usr/local/elkf/filebeat/data:/usr/share/filebeat/data
+   - /usr/local/elkf/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+   - /usr/local/elkf/filebeat/logs:/usr/share/filebeat/logs
+  links:
+    - logstash
+  container_name: filebeat
+  user: "root"
+ elasticsearch:
+  image: elasticsearch:7.12.1
+  ports:
+    - "9200:9200"
+    - "9300:9300"
+  volumes:
+    - /usr/local/elkf/elasticsearch/data:/usr/share/elasticsearch/data
+    - /usr/local/elkf/elasticsearch-plugins:/usr/share/elasticsearch/plugins
+  environment:
+    ELASTICSEARCH_USERNAME: "root"
+    ELASTICSEARCH_PASSWORD: "123456"
+    ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    discovery.type: single-node
+    xpack.security.enabled: 'false'
+    TZ: Asia/Shanghai
+  container_name: elasticsearch
+  restart: always
+ logstash:
+  image: logstash:7.12.1
+  ports:
+   - "5044:5044"
+  volumes:
+   - /usr/local/elkf/logstash/logs:/usr/share/logstash/logs
+   - /usr/local/elkf/logstash/config:/usr/share/logstash/config
+  networks:
+   - default
+  environment:
+   LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+   container_name: logstash
+   TZ: Asia/Shanghai
+  links:
+   - elasticsearch
+ kibana:
+  image: kibana:7.12.1
+  ports:
+   - "5601:5601"
+  environment:
+    I18N_LOCALE: zh-CN
+    TZ: Asia/Shanghai
+  container_name: kibana
+  links:
+   - elasticsearch
+  restart: always

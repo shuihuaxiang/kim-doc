@@ -77,10 +77,12 @@
   - **springboot**
     - [springboot](常用框架/springboot/springboot.md)
     - [springboot与redis](常用框架/springboot/springboot与redis.md)
+    - [springcache与redis](常用框架/springboot/springcache与redis.md)
   - **springcloud**
     - **Alibaba**
         - **Nacos**
-            - [Nacos安装与使用](常用框架/springcloud/Alibaba/Nacos/Nacos安装与使用.md)  
+            - [Nacos安装与使用](常用框架/springcloud/Alibaba/Nacos/Nacos安装与使用.md) 
+            - [Nacos原理与实现](常用框架/springcloud/Alibaba/Nacos/Nacos原理与实现.md)
 - **操作系统**
   - [Linux](操作系统/Linux.md)
   - [虚拟机](操作系统/虚拟机.md)
@@ -110,8 +112,9 @@
 - **日常bug记录**
   - [日常问题记录](日常bug记录/日常问题记录.md)
 - **构架**
-  - [分布式系统构架](构架/分布式系统构架.md)
-  - [常规系统构架](构架/常规系统构架.md)
+  - [集成smart-doc](构架/集成smart-doc.md)
+  - [集成ELKF收集日志.md](构架/集成ELKF收集日志.md)
+  - [集成sentinel.md](构架/集成sentinel.md)
 - **计算机基础**
   - [操作系统](计算机基础/操作系统.md)
   - [数据结构](计算机基础/数据结构.md)

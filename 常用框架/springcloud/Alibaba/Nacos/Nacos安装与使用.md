@@ -53,8 +53,99 @@
 账号：nacos  
 密码：nacos  
 
-## Linux安装
+## docker安装
+1.拉取镜像
 
+    docker pull nacos/nacos-server:1.4.1
+
+2.创建数据卷
+
+    mkdir -p  /usr/local/nacos/logs/                      #新建logs目录
+    mkdir -p /usr/local/nacos/init.d/          
+    
+3.新建数据库
+    
+    初始化数据库表
+    创建名为nacos的数据库
+    运行 nacos-mysql.sql文件建表
+      
+4，新建配置文件
+
+    vim /usr/local/nacos/init.d/application.properties 
+
+> 配置文件内容
+    
+    # spring
+    
+    server.contextPath=/nacos
+    server.servlet.contextPath=/nacos
+    server.port=8848
+    
+    spring.datasource.platform=mysql
+    db.num=1
+    db.url.0=jdbc:mysql://10.0.0.1:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+    db.user=root
+    db.password=123456
+    # nacos.cmdb.dumpTaskInterval=3600
+    # nacos.cmdb.eventTaskInterval=10
+    # nacos.cmdb.labelTaskInterval=300
+    # nacos.cmdb.loadDataAtStart=false
+    
+    
+    # metrics for prometheus
+    #management.endpoints.web.exposure.include=*
+    
+    # metrics for elastic search
+    management.metrics.export.elastic.enabled=false
+    #management.metrics.export.elastic.host=http://localhost:9200
+    
+    # metrics for influx
+    management.metrics.export.influx.enabled=false
+    #management.metrics.export.influx.db=springboot
+    #management.metrics.export.influx.uri=http://localhost:8086
+    #management.metrics.export.influx.auto-create-db=true
+    #management.metrics.export.influx.consistency=one
+    #management.metrics.export.influx.compressed=true
+    
+    server.tomcat.accesslog.enabled=true
+    server.tomcat.accesslog.pattern=%h %l %u %t "%r" %s %b %D %{User-Agent}i
+    # default current work dir
+    server.tomcat.basedir=
+    
+    ## spring security config
+    ### turn off security
+    #spring.security.enabled=false
+    #management.security=false
+    #security.basic.enabled=false
+    #nacos.security.ignore.urls=/**
+    
+    nacos.security.ignore.urls=/,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/login,/v1/console/health/**,/v1/cs/**,/v1/ns/**,/v1/cmdb/**,/actuator/**,/v1/console/server/**
+    
+    # nacos.naming.distro.taskDispatchPeriod=200
+    # nacos.naming.distro.batchSyncKeyCount=1000
+    # nacos.naming.distro.syncRetryDelay=5000
+    # nacos.naming.data.warmup=true
+    # nacos.naming.expireInstance=true
+    
+    nacos.istio.mcp.server.enabled=false
+
+5.运行
+    
+    docker  run \
+    --name nacos -d \
+    -p 8848:8848 \
+    --privileged=true \
+    --restart=always \
+    -e JVM_XMS=256m \
+    -e JVM_XMX=256m \
+    -e MODE=standalone \
+    -e PREFER_HOST_MODE=hostname \
+    -v /usr/local/nacos/logs:/home/nacos/logs \
+    -v /usr/local/nacos/init.d/application.properties:/home/nacos/init.d/custom.properties \
+    nacos/nacos-server:1.4.1
+    
+    
+6.访问
 ## 依赖与配置
 ### 依赖
     
@@ -98,4 +189,4 @@
 
     -Dserver.port=8082
 
-![](images/81d68fce.png)
+日常问题记录

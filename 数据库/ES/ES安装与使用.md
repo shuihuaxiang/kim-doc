@@ -2,6 +2,8 @@
 安装环境：
 - Ubuntu 18.04.5
 - docker[安装步骤查看](/常用工具/docker.md)
+- elasticsearch:7.12.1
+- kibana:7.12.1
 
 
 
@@ -29,7 +31,7 @@
            -v /usr/local/es/es-data:/usr/share/elasticsearch/data \
            -v /usr/local/es/es-plugins:/usr/share/elasticsearch/plugins \
            --privileged \
-           --network es-net \
+           --network elk \
            -p 9200:9200 \
            -p 9300:9300 \
        elasticsearch:7.12.1
@@ -55,7 +57,7 @@
 **注意**：要给挂载文件权限。不然会报错
     
     cd /usr/local/es
-    chmod 777 es
+    chmod -R 777 es
    
 
 ![](images/108182bd.png)
@@ -67,7 +69,7 @@
     docker run -d \
         --name kibana \
         -e ELASTICSEARCH_HOSTS=http://es:9200 \
-        --network=es-net \
+        --network=elk \
         -p 5601:5601  \
     kibana:7.12.1
     
@@ -104,7 +106,7 @@
      
     mkdir ik
      
-    chmod 777 ik
+    chmod -R 777 ik
      
     cd ik
      
@@ -112,7 +114,11 @@
 
     unzip elasticsearch-analysis-ik-7.12.1.zip
     
+  
+    
     #解压之后一定要删除 zip，不然启动不了
+    rm elasticsearch-analysis-ik-7.12.1.zip
+    
     
     docker restart es
     
@@ -120,6 +126,7 @@
     
     # 进入docker 查看
     docker exec -it es /bin/bash
+     
      /usr/share/elasticsearch/plugins
      
 ### 使用
@@ -170,7 +177,7 @@
      
     mkdir py
      
-    chmod 777 py
+    chmod -R 777 py
      
     cd py
      

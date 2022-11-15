@@ -1,0 +1,102 @@
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+#  processors:
+#    - add_cloud_metadata: ~
+#    - add_docker_metadata: ~
+
+filebeat.inputs:
+  - type: log
+    enabled: true
+    fields:
+      type: "user-service"
+    paths:
+      - D:\work\soft\online-match-logs\user-service\*.log
+    multiline.pattern: '^\d+.*$'
+    multiline.negate: true
+    multiline.match: after
+    multiline.timeout: 10s
+  - type: log
+    enabled: true
+    fields:
+      type: "gateway-service"
+    paths:
+      - D:\work\soft\online-match-logs\gateway-service\*.log
+    multiline.pattern: '^\d+.*$'
+    multiline.negate: true
+    multiline.match: after
+    multiline.timeout: 10s
+  - type: log
+    enabled: true
+    fields:
+      type: "player-service"
+    paths:
+      - D:\work\soft\online-match-logs\player-service\*.log
+    multiline.pattern: '^\d+.*$'
+    multiline.negate: true
+    multiline.match: after
+    multiline.timeout: 10s
+  - type: log
+    enabled: true
+    fields:
+      type: "activity-service"
+    paths:
+      - D:\work\soft\online-match-logs\activity-service\*.log
+    multiline.pattern: '^\d+.*$'
+    multiline.negate: true
+    multiline.match: after
+    multiline.timeout: 10s
+  - type: log
+    enabled: true
+    fields:
+      type: "order-service"
+    paths:
+      - D:\work\soft\online-match-logs\order-service\*.log
+    multiline.pattern: '^\d+.*$'
+    multiline.negate: true
+    multiline.match: after
+    multiline.timeout: 10s
+  - type: log
+    enabled: true
+    fields:
+      type: "base-service"
+    paths:
+      - D:\work\soft\online-match-logs\base-service\*.log
+    multiline.pattern: '^\d+.*$'
+    multiline.negate: true
+    multiline.match: after
+    multiline.timeout: 10s
+  - type: log
+    enabled: true
+    fields:
+      type: "draw-service"
+    paths:
+      - D:\work\soft\online-match-logs\draw-service\*.log
+    multiline.pattern: '^\d+.*$'
+    multiline.negate: true
+    multiline.match: after
+    multiline.timeout: 10s
+output.logstash:
+  hosts: ["192.168.171.132:5044"]
+  indices:
+    - index: "draw-service-%{+yyyy.MM.dd}"
+      when.equals:
+        fields.type: "draw-service"
+    - index: "activity-service{+yyyy.MM.dd}"
+      when.equals:
+        fields.type: "activity-service"
+    - index: "base-service-%{+yyyy.MM.dd}"
+      when.equals:
+        fields.type: "base-service"
+    - index: "order-service-%{+yyyy.MM.dd}"
+      when.equals:
+        fields.type: "order-service"
+    - index: "player-service-%{+yyyy.MM.dd}"
+      when.equals:
+        fields.type: "player-service"
+    - index: "user-service-%{+yyyy.MM.dd}"
+      when.equals:
+        fields.type: "user-service"
+
