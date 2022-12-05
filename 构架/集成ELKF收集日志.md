@@ -317,8 +317,8 @@ resources下新建logback-spring.xml
         <!--配置文件配置日志存放地址，方便修改-->
         <springProperty name="logsFilePath" scope="context" source="logging.path"/>
         <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
-        <!--${LOG_PATH:- }左右是获得文件基础路径为空，使用application.xml中配置的logging.path-->
-        <property name="LOG_HOME" value="${LOG_PATH:- }/${appName}"/>
+        <!--${LOG_PATH:-}是获得文件基础路径为空，使用application.xml中配置的logging.path-->
+        <property name="LOG_HOME" value="${LOG_PATH:-}/${appName}"/>
         <!-- 定义日志格式  -->
         <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] [%-30.30logger{30}] %msg%n"/>
         <!-- 控制台输出 -->
@@ -396,13 +396,15 @@ resources下新建logback-spring.xml
 新增配置文件路径
     
     logging:
-      path: D:/work/soft/online-match-logs
+      file:
+        path: D:/work/soft/online-match-logs
       level:
         com.kim.match: debug
         com.alibaba.nacos.client.config.impl: warn
-          # feign调用日志，链路日志
+        # feign调用日志，链路日志
         org.springframework.cloud.openfeign: debug
         org.springframework.cloud.sleuth: debug
+
 
 
       

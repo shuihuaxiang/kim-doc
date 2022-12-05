@@ -115,6 +115,9 @@
   - [集成smart-doc](构架/集成smart-doc.md)
   - [集成ELKF收集日志.md](构架/集成ELKF收集日志.md)
   - [集成sentinel.md](构架/集成sentinel.md)
+  - [集成sleuth+zipkin.md](构架/集成sleuth+zipkin.md)
+  - [集成Jenkins自动部署.md](构架/集成Jenkins自动部署.md)
+  
 - **计算机基础**
   - [操作系统](计算机基础/操作系统.md)
   - [数据结构](计算机基础/数据结构.md)

@@ -36,9 +36,12 @@ java -Dserver.port=8088 -Dcsp.sentinel.dashboard.server=localhost:8088 -Dproject
     
     spring:
       cloud:  
-        sentinel:
-          transport:
-            # 应用开启端口，接收dashboard限流规则，如果被占用会默认+1
-            port: 8719
-            # 控制台ip:port
-            dashboard: 192.168.171.132:8858
+         sentinel:
+              log:
+               # logs日志地址修改一下
+                dir: D:/work/soft/online-match-logs/sentienl
+              transport:
+                # 应用开启端口，接收dashboard限流规则，如果被占用会默认+1
+                port: 8719
+                 # 控制台ip:port
+                dashboard: 192.168.171.132:8858  
