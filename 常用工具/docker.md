@@ -304,7 +304,18 @@ docker镜像中有分层的概念，就是一个镜像可能基于好几个镜�
     # 后面接某一个网络
     docker network inspect elkf_default
     
+### 17.操作所有容器
     
+    # 启动所有镜像
+    docker start $(docker ps -a -q)
+     
+    # stop停止所有容器
+    docker stop $(docker ps -a -q)
+     
+    # remove删除所有容器
+    docker rm $(docker ps -a -q) 
+    
+        
 ## Docker Compose 安装与使用
 ### 简介
 - Compose 项目是 Docker 官方的开源项目,负责实现对 Docker 容器集群的快速编排,定义和运行多容器Docker应用程序的工具。通过Compose，您可以使用YAML文件来配置应用程序的服务。然后，使用一个命令，就可以从配置中创建并启动所有服务

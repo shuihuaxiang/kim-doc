@@ -19,7 +19,26 @@
 4.打开以后，选择HOSTS文件。把刚才复制的IP地址，复制到这个文件里，格式如下：
 
 ![](images/6e201f1b.png)
-  
+## idea与gitee
+1、安装gitee插件
+2、配置gitee插件
+> 输入gitee账号密码
+![](images/eddad7a4.png)
+
+3、gitee里面新建项目
+![](images/1d038260.png)
+
+4、idea里面修改项目git地址
+
+![](images/7cc7780a.png)
+
+![](images/3f559fd1.png)
+
+5、生成gitee pages
+> 需要实名认证，比较麻烦
+
+![](images/64e2bc55.png)
+
   
 ## gitlab
 

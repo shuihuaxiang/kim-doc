@@ -68,6 +68,11 @@
 - **常用框架**
   - [canal](常用框架/canal.md)
   - **消息中间件**
+    - **emqx**
+        - [emqx安装与使用](常用框架/消息中间件/emqx/emqx安装与使用.md)
+        - [mqtt协议](常用框架/消息中间件/emqx/mqtt协议.md)
+        - [emqx高级功能](常用框架/消息中间件/emqx/emqx高级功能.md)    
+        - [emqx与springboot](常用框架/消息中间件/emqx/emqx与springboot.md)
     - **RabbitMQ**
         - [RabbitMQ安装与使用](常用框架/消息中间件/RabbitMQ/RabbitMQ安装与使用.md)
         - [RabbitMQ理论与原理](常用框架/消息中间件/RabbitMQ/RabbitMQ理论与原理.md)
